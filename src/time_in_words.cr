@@ -35,7 +35,7 @@ module TimeInWords
 
   # Returns a `String` with approximate distance in time between `from` and current moment.
 
-  def time_ago_in_words(from : Time) : String
+  def time_in_words(from : Time) : String
     distance_of_time_in_words(from, Time.utc)
   end
 

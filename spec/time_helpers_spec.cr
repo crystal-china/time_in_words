@@ -33,7 +33,7 @@ describe TimeInWords do
 
   describe "time_ago_in_words" do
     it "returns the distance from now" do
-      time_ago_in_words(Time.local - 13.months).should eq "about a year"
+      time_in_words(Time.local - 13.months).should eq "about a year"
     end
   end
 end
