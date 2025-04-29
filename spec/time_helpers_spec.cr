@@ -1,7 +1,8 @@
 require "./spec_helper"
-include TimeInWords
+alias Helpers = TimeInWords::Helpers(TimeInWords::I18n::EN)
+include Helpers
 
-describe TimeInWords do
+describe "TimeInWords" do
   describe "distance_of_time_in_words" do
     it "reports the approximate distance in time between two Time" do
       from_time = Time.local
@@ -23,21 +24,21 @@ describe TimeInWords do
       distance_of_time_in_words(from: from_time, to: from_time + 12.months).should eq "about a year"
       distance_of_time_in_words(from: from_time, to: from_time + 2.years).should eq "over 2 years"
       distance_of_time_in_words(from: from_time, to: from_time + 10.years).should eq "almost 10 years"
-      TimeInWords.distance(from: from_time, to: from_time + 10.years).should eq "almost 10 years"
+      Helpers.distance(from: from_time, to: from_time + 10.years).should eq "almost 10 years"
     end
 
     it "takes a Time::Span" do
       span = 4.minutes
       distance_of_time_in_words(span: span).should eq "4 minutes"
       distance_of_time_in_words(span: span).should eq "4 minutes"
-      TimeInWords.distance(span: span).should eq "4 minutes"
+      Helpers.distance(span: span).should eq "4 minutes"
     end
   end
 
   describe "time_in_words" do
     it "returns the distance from now" do
       time_in_words(from: Time.local - 13.months).should eq "about a year"
-      TimeInWords.from(past_time: Time.local - 13.months).should eq "about a year"
+      Helpers.from(past_time: Time.local - 13.months).should eq "about a year"
     end
   end
 end
