@@ -35,9 +35,13 @@ module TimeInWords
     distance_in_seconds(seconds)
   end
 
+  def from(a_time_before : Time) : String
+    distance_of_time_in_words(a_time_before, Time.utc)
+  end
+
   # Returns a `String` with approximate distance in time between `from` and current moment.
 
-  def time_in_words(*, from : Time) : String
+  private def time_in_words(*, from : Time) : String
     distance_of_time_in_words(from, Time.utc)
   end
 

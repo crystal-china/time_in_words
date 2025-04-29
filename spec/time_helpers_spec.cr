@@ -23,7 +23,6 @@ describe TimeInWords do
       distance_of_time_in_words(from_time, from_time + 12.months).should eq "about a year"
       distance_of_time_in_words(from_time, from_time + 2.years).should eq "over 2 years"
       distance_of_time_in_words(from_time, from_time + 10.years).should eq "almost 10 years"
-      TimeInWords.distance_of_time_in_words(from_time, from_time + 10.years).should eq "almost 10 years"
     end
 
     it "takes a Time::Span" do
@@ -36,6 +35,7 @@ describe TimeInWords do
   describe "time_in_words" do
     it "returns the distance from now" do
       time_in_words(from: Time.local - 13.months).should eq "about a year"
+      TimeInWords.from(Time.local - 13.months).should eq "about a year"
     end
   end
 end
