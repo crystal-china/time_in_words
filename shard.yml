@@ -1,0 +1,9 @@
+name: time_in_words
+version: 0.1.0
+
+authors:
+  - Billy.Zheng <vil963@gmail.com>
+
+crystal: '>= 1.16.0'
+
+license: MIT
