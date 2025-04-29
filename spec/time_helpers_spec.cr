@@ -1,11 +1,6 @@
-require "../spec_helper"
+require "./spec_helper"
 
-include ContextHelper
-
-private class TestPage
-  include Lucky::HTMLPage
-  include Lucky::TimeHelpers
-end
+include Lucky::TimeHelpers
 
 describe Lucky::TimeHelpers do
   describe "distance_of_time_in_words" do
@@ -51,5 +46,5 @@ describe Lucky::TimeHelpers do
 end
 
 private def view
-  TestPage.new(build_context)
+  self
 end
