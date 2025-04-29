@@ -30,7 +30,6 @@ describe "TimeInWords" do
     it "takes a Time::Span" do
       span = 4.minutes
       distance_of_time_in_words(span: span).should eq "四分钟前"
-      distance_of_time_in_words(span: span).should eq "四分钟前"
       ZHHelpers.distance(span: span).should eq "四分钟前"
     end
   end

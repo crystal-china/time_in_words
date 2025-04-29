@@ -30,7 +30,6 @@ describe "TimeInWords" do
     it "takes a Time::Span" do
       span = 4.minutes
       distance_of_time_in_words(span: span).should eq "4 minutes"
-      distance_of_time_in_words(span: span).should eq "4 minutes"
       Helpers.distance(span: span).should eq "4 minutes"
     end
   end
