@@ -1,8 +1,7 @@
 require "./spec_helper"
+include TimeInWords
 
-include Lucky::TimeHelpers
-
-describe Lucky::TimeHelpers do
+describe TimeInWords do
   describe "distance_of_time_in_words" do
     it "reports the approximate distance in time between two Time" do
       from_time = Time.local
