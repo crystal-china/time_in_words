@@ -1,6 +1,18 @@
 module TimeInWords
   extend self
 
+  def distance(*, from : Time, to : Time) : String
+    distance_of_time_in_words(from: from, to: to)
+  end
+
+  def distance(*, span : Time::Span) : String
+    distance_of_time_in_words(span: span)
+  end
+
+  def from(*, past_time : Time) : String
+    time_in_words(from: past_time)
+  end
+
   # Returns a `String` with approximate distance in time between `from` and `to`.
   #
   # ```
@@ -17,12 +29,12 @@ module TimeInWords
   # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2061, 10, 4))
   # # => "almost 42 years"
   # ```
-  def distance_of_time_in_words(from : Time, to : Time) : String
-    distance_of_time_in_words(to - from)
+  private def distance_of_time_in_words(*, from : Time, to : Time) : String
+    distance_of_time_in_words(span: to - from)
   end
 
   # :ditto:
-  def distance_of_time_in_words(span : Time::Span) : String
+  private def distance_of_time_in_words(*, span : Time::Span) : String
     minutes = span.minutes
     seconds = span.seconds
     hours = span.hours
@@ -35,14 +47,10 @@ module TimeInWords
     distance_in_seconds(seconds)
   end
 
-  def from(a_time_before : Time) : String
-    distance_of_time_in_words(a_time_before, Time.utc)
-  end
-
   # Returns a `String` with approximate distance in time between `from` and current moment.
 
   private def time_in_words(*, from : Time) : String
-    distance_of_time_in_words(from, Time.utc)
+    distance_of_time_in_words(from: from, to: Time.utc)
   end
 
   private def distance_in_days(distance : Int) : String
