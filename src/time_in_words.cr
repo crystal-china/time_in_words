@@ -1,4 +1,6 @@
 module TimeInWords
+  extend self
+
   # Returns a `String` with approximate distance in time between `from` and `to`.
   #
   # ```
