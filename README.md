@@ -4,6 +4,8 @@ All code stolen from [lucky framework time_helpers](https://github.com/luckyfram
 
 Only EN and ZH_CN supported for now, PR is welcome.
 
+The locale name will follow name in [this](https://github.com/crystal-i18n/i18n/blob/a0d6276114a31f233cfec4ac928a01051ab01aa2/src/i18n/pluralization.cr#L33-L178) file.
+
 ## Installation
 
 1. Add the dependency to your `shard.yml`:

@@ -3,7 +3,7 @@ module TimeInWords
     module ZH_CN
       extend self
 
-      Map = Hash(Int32, String | Int32).new { |hash, k| hash[k] = "#{k} " }
+      Map = Hash(Int64, String).new { |hash, k| hash[k] = "#{k} " }
       Map[1] = "一"
       Map[2] = "两"
       Map[3] = "三"
