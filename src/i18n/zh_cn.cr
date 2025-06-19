@@ -4,6 +4,7 @@ module TimeInWords
       extend self
 
       Map = Hash(Int64, String).new { |hash, k| hash[k] = "#{k} " }
+      Map[0] = "零"
       Map[1] = "一"
       Map[2] = "两"
       Map[3] = "三"
