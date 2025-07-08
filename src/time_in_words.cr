@@ -39,10 +39,10 @@ module TimeInWords
     end
 
     private def distance_of_time_in_words(*, span : Time::Span) : String
-      minutes = span.minutes
-      seconds = span.seconds
-      hours = span.hours
-      days = span.days
+      minutes = span.minutes.to_i32
+      seconds = span.seconds.to_i32
+      hours = span.hours.to_i32
+      days = span.days.to_i32
 
       return T.distance_in_days(days) if days != 0
       return T.distance_in_hours(hours, minutes) if hours != 0

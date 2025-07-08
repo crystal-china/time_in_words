@@ -16,7 +16,7 @@ module TimeInWords
       Map[9] = "九"
       Map[10] = "十"
 
-      def distance_in_days(distance : Int) : String
+      def distance_in_days(distance : Int32) : String
         case distance
         when 1...27   then distance == 1 ? "#{Map[1]}天前" : "#{Map[distance]}天前"
         when 27...60  then "大约#{Map[1]}个月前"

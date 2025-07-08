@@ -3,7 +3,7 @@ module TimeInWords
     module EN
       extend self
 
-      def distance_in_days(distance : Int) : String
+      def distance_in_days(distance : Int32) : String
         case distance
         when 1...27   then distance == 1 ? "a day" : "#{distance} days"
         when 27...60  then "about a month"
