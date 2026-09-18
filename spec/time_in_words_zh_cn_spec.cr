@@ -6,12 +6,12 @@ describe "TimeInWords" do
   describe "distance_of_time_in_words for cn" do
     it "reports the approximate distance in time between two Time" do
       from_time = Time.local
+      distance_of_time_in_words(from: from_time, to: from_time).should eq "刚刚"
       distance_of_time_in_words(from: from_time, to: from_time + 1.second).should eq "一秒前"
       distance_of_time_in_words(from: from_time, to: from_time + 10.seconds).should eq "十秒前"
       distance_of_time_in_words(from: from_time, to: from_time + 1.minute).should eq "一分钟前"
       distance_of_time_in_words(from: from_time, to: from_time + 2.minutes).should eq "两分钟前"
       distance_of_time_in_words(from: from_time, to: from_time + 35.minutes).should eq "35 分钟前"
-      distance_of_time_in_words(from: from_time, to: from_time + 45.minutes).should eq "大约一个小时前"
       distance_of_time_in_words(from: from_time, to: from_time + 50.minutes).should eq "大约一个小时前"
       distance_of_time_in_words(from: from_time, to: from_time + 1.hour).should eq "一个小时前"
       distance_of_time_in_words(from: from_time, to: from_time + 110.minutes).should eq "大约两小时前"
@@ -19,7 +19,12 @@ describe "TimeInWords" do
       distance_of_time_in_words(from: from_time, to: from_time + 2.hours).should eq "两小时前"
       distance_of_time_in_words(from: from_time, to: from_time + 1.day).should eq "一天前"
       distance_of_time_in_words(from: from_time, to: from_time + 10.days).should eq "十天前"
-      distance_of_time_in_words(from: from_time, to: from_time + 1.month).should eq "大约一个月前"
+      distance_of_time_in_words(from: from_time, to: from_time + 22.days).should eq "22 天前"
+      distance_of_time_in_words(from: from_time, to: from_time + 28.days).should eq "大约一个月前"
+      distance_of_time_in_words(from: from_time, to: from_time + 33.days).should eq "大约一个月前"
+      distance_of_time_in_words(from: from_time, to: from_time + 44.days).should eq "大约一个半月前"
+      distance_of_time_in_words(from: from_time, to: from_time + 53.days).should eq "两个月前"
+      distance_of_time_in_words(from: from_time, to: from_time + 80.days).should eq "三个月前"
       distance_of_time_in_words(from: from_time, to: from_time + 10.months).should eq "十个月前"
       distance_of_time_in_words(from: from_time, to: from_time + 12.months).should eq "大约一年前"
       distance_of_time_in_words(from: from_time, to: from_time + 2.years).should eq "超过两年前"

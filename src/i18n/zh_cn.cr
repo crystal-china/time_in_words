@@ -18,15 +18,17 @@ module TimeInWords
 
       def distance_in_days(distance : Int32) : String
         case distance
-        when 1...27   then distance == 1 ? "#{Map[1]}天前" : "#{Map[distance]}天前"
-        when 27...60  then "大约#{Map[1]}个月前"
-        when 60...365 then "#{Map[(distance / 30).round.to_i]}个月前"
+        when 27...35  then "大约#{Map[1]}个月前"
+        when 40...52  then "大约#{Map[1]}个半月前"
+        when 52...365 then "#{Map[(distance / 30).round.to_i]}个月前"
         when 365...730
           "大约#{Map[1]}年前"
         when 730...1460
           "超过#{Map[(distance / 365).round.to_i]}年前"
-        else
+        when 1460...
           "几乎#{Map[(distance / 365).round.to_i]}年前"
+        else
+          "#{Map[distance]}天前"
         end
       end
 
@@ -45,12 +47,12 @@ module TimeInWords
         when 1      then "#{Map[1]}分钟前"
         when 2...45 then "#{Map[distance]}分钟前"
         else
-          "大约一个小时前"
+          "大约#{Map[1]}个小时前"
         end
       end
 
       def distance_in_seconds(distance : Int32) : String
-        distance == 1 ? "#{Map[1]}秒前" : "#{Map[distance]}秒前"
+        distance == 0 ? "刚刚" : "#{Map[distance]}秒前"
       end
     end
   end
