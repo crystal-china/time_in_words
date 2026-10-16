@@ -52,11 +52,11 @@ describe "TimeInWords" do
 
   describe "from" do
     it "returns the distance from now" do
-      ZHHelpers.from(past_time: Time.local - 13.months).should eq "大约一年前"
+      ZHHelpers.from(time: Time.local - 13.months).should eq "大约一年前"
     end
 
     it "describes the current moment as just now" do
-      ZHHelpers.from(past_time: Time.utc).should eq "刚刚"
+      ZHHelpers.from(time: Time.utc).should eq "刚刚"
     end
   end
 end

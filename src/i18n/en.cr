@@ -7,6 +7,10 @@ module TimeInWords
         "#{words} ago"
       end
 
+      def from_now(words : String) : String
+        "in #{words}"
+      end
+
       def distance_in_days(distance : Int32) : String
         case distance
         when 1...27  then distance == 1 ? "a day" : "#{distance} days"

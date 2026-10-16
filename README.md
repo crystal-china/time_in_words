@@ -25,7 +25,7 @@ require "time_in_words"
 
 alias TimeHelper = TimeInWords::Helpers(TimeInWords::I18n::ZH_CN)
 
-TimeHelper.from(past_time: Time.local - 13.months) # => "大约一年前"
+TimeHelper.from(time: Time.local - 13.months) # => "大约一年前"
 
 from_time = Time.local
 TimeHelper.distance(from: from_time, to: from_time + 50.minutes) # => "大约一个小时"
@@ -35,18 +35,23 @@ span = 4.minutes
 TimeHelper.distance(span: span) # => "四分钟"
 
 TimeHelper.distance(span: Time::Span.zero) # => "零秒"
-TimeHelper.from(past_time: Time.utc)       # => "刚刚"
+TimeHelper.from(time: Time.utc)            # => "刚刚"
 ```
 
 Check the [time_in_words_en_spec.cr](spec/time_in_words_en_spec.cr) for usage about English time words.
 
-In both languages, `distance` returns only the duration. `from` adds `ago` in
-English or `前` in Chinese; the Chinese result for the current moment is `刚刚`.
+In both languages, `distance` returns only the duration, regardless of the order
+of its dates or the sign of its span. `from` adds `ago` / `前` for past times and
+`in` / `后` for future times; the Chinese result for the current moment is `刚刚`.
+
+Year descriptions follow Rails' approximate / over / almost thresholds. Date
+pairs account for leap days; a bare `Time::Span` uses fixed 365-day years because
+it has no calendar dates.
 
 ```crystal
 alias EnglishTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::EN)
 
-EnglishTimeHelper.from(past_time: Time.utc - 2.hours) # => "2 hours ago"
+EnglishTimeHelper.from(time: Time.utc - 2.hours)      # => "2 hours ago"
 EnglishTimeHelper.distance(span: 2.hours)            # => "2 hours"
 ```
 

@@ -29,9 +29,12 @@ module TimeInWords
       distance_of_time_in_words(span: span)
     end
 
-    # Returns a `String` with approximate distance in time between `from` and current moment.
-    def from(*, past_time : Time) : String
-      T.ago(time_in_words(from: past_time))
+    # Returns the approximate distance from now, with a past or future phrase.
+    def from(*, time : Time) : String
+      now = Time.utc
+      words = distance_of_time_in_words(from: time, to: now)
+
+      time > now ? T.from_now(words) : T.ago(words)
     end
 
     private def distance_of_time_in_words(*, from : Time, to : Time) : String
@@ -89,10 +92,6 @@ module TimeInWords
       return T.distance_in_minutes(minutes) if minutes != 0
 
       T.distance_in_seconds(seconds)
-    end
-
-    private def time_in_words(*, from : Time) : String
-      distance_of_time_in_words(from: from, to: Time.utc)
     end
 
     private def distance_in_years(span : Time::Span) : String

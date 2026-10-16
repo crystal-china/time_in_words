@@ -20,6 +20,10 @@ module TimeInWords
         words == "零秒" ? "刚刚" : "#{words}前"
       end
 
+      def from_now(words : String) : String
+        "#{words}后"
+      end
+
       def distance_in_days(distance : Int32) : String
         case distance
         when 27...38  then "大约#{Map[1]}个月"

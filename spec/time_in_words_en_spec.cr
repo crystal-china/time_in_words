@@ -39,7 +39,7 @@ describe "TimeInWords" do
 
   describe "from" do
     it "returns the distance from now" do
-      Helpers.from(past_time: Time.local - 13.months).should eq "about a year ago"
+      Helpers.from(time: Time.local - 13.months).should eq "about a year ago"
     end
   end
 end

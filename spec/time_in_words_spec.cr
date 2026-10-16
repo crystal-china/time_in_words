@@ -59,4 +59,13 @@ describe TimeInWords do
       ChineseTimeHelper.distance(from: to, to: from).should eq "三天"
     end
   end
+
+  describe "future times" do
+    it "uses a future phrase instead of ago" do
+      future = Time.utc + 2.days + 30.seconds
+
+      EnglishTimeHelper.from(time: future).should eq "in 2 days"
+      ChineseTimeHelper.from(time: future).should eq "两天后"
+    end
+  end
 end
