@@ -4,6 +4,28 @@ alias EnglishTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::EN)
 alias ChineseTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::ZH_CN)
 
 describe TimeInWords do
+  describe "unit boundaries" do
+    {
+      {1.minute - 1.second, "59 seconds", "59 秒"},
+      {1.minute, "a minute", "一分钟"},
+      {45.minutes - 1.second, "44 minutes", "44 分钟"},
+      {45.minutes, "about an hour", "大约一个小时"},
+      {1.hour - 1.second, "about an hour", "大约一个小时"},
+      {1.hour, "an hour", "一个小时"},
+      {1.hour + 45.minutes - 1.second, "an hour", "一个小时"},
+      {1.hour + 45.minutes, "almost 2 hours", "大约两小时"},
+      {2.hours - 1.second, "almost 2 hours", "大约两小时"},
+      {2.hours, "2 hours", "两小时"},
+      {1.day - 1.second, "almost 24 hours", "大约24 小时"},
+      {1.day, "a day", "一天"},
+    }.each do |span, english, chinese|
+      it "describes #{span} at a unit boundary" do
+        EnglishTimeHelper.distance(span: span).should eq english
+        ChineseTimeHelper.distance(span: span).should eq chinese
+      end
+    end
+  end
+
   describe "year boundaries" do
     # A bare span has no calendar dates, so one year is 365 days.
     {
@@ -33,6 +55,8 @@ describe TimeInWords do
       {Time.utc(2000, 1, 1), Time.utc(2001, 4, 2), "about a year", "大约一年"},
       {Time.utc(2026, 1, 1), Time.utc(2030, 1, 1), "about 4 years", "大约四年"},
       {Time.utc(2020, 1, 1), Time.utc(2100, 1, 1), "about 80 years", "大约80 年"},
+      {Time.utc(2020, 3, 1), Time.utc(2021, 3, 1), "about a year", "大约一年"},
+      {Time.utc(2023, 3, 1), Time.utc(2024, 2, 29), "about a year", "大约一年"},
     }.each do |from, to, english, chinese|
       it "discounts leap days between #{from} and #{to}" do
         EnglishTimeHelper.distance(from: from, to: to).should eq english
