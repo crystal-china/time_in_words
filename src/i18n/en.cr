@@ -13,11 +13,15 @@ module TimeInWords
 
       def distance_in_days(distance : Int32) : String
         case distance
-        when 1...27  then distance == 1 ? "a day" : "#{distance} days"
+        when 1...27  then days(distance)
         when 27...60 then "about a month"
         else
           "#{(distance / 30).round(:ties_away).to_i} months"
         end
+      end
+
+      def days(count : Int32) : String
+        count == 1 ? "a day" : "#{count} days"
       end
 
       def about_years(years : Int32) : String

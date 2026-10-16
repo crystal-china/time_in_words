@@ -30,8 +30,12 @@ module TimeInWords
         when 38...52  then "大约#{Map[1]}个半月"
         when 52...365 then "#{Map[(distance / 30).round(:ties_away).to_i]}个月"
         else
-          "#{Map[distance]}天"
+          days(distance)
         end
+      end
+
+      def days(count : Int32) : String
+        "#{Map[count]}天"
       end
 
       def about_years(years : Int32) : String
