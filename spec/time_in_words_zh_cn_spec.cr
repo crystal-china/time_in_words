@@ -4,7 +4,7 @@ alias ZHHelpers = TimeInWords::Helpers(TimeInWords::I18n::ZH_CN)
 describe "TimeInWords" do
   describe "distance for cn" do
     it "reports the approximate distance in time between two Time" do
-      from_time = Time.local
+      from_time = Time.utc(2026, 1, 1)
       ZHHelpers.distance(from: from_time, to: from_time).should eq "零秒"
       ZHHelpers.distance(from: from_time, to: from_time + 1.second).should eq "一秒"
       ZHHelpers.distance(from: from_time, to: from_time + 10.seconds).should eq "十秒"
@@ -18,16 +18,30 @@ describe "TimeInWords" do
       ZHHelpers.distance(from: from_time, to: from_time + 2.hours).should eq "两小时"
       ZHHelpers.distance(from: from_time, to: from_time + 1.day).should eq "一天"
       ZHHelpers.distance(from: from_time, to: from_time + 10.days).should eq "十天"
-      ZHHelpers.distance(from: from_time, to: from_time + 22.days).should eq "22 天"
-      ZHHelpers.distance(from: from_time, to: from_time + 28.days).should eq "大约一个月"
-      ZHHelpers.distance(from: from_time, to: from_time + 33.days).should eq "大约一个月"
-      ZHHelpers.distance(from: from_time, to: from_time + 44.days).should eq "大约一个半月"
-      ZHHelpers.distance(from: from_time, to: from_time + 53.days).should eq "两个月"
-      ZHHelpers.distance(from: from_time, to: from_time + 80.days).should eq "三个月"
-      ZHHelpers.distance(from: from_time, to: from_time + 10.months).should eq "十个月"
-      ZHHelpers.distance(from: from_time, to: from_time + 12.months).should eq "大约一年"
-      ZHHelpers.distance(from: from_time, to: from_time + 2.years).should eq "超过两年"
-      ZHHelpers.distance(from: from_time, to: from_time + 10.years).should eq "几乎十年"
+    end
+
+    {
+      {26, "26 天"},
+      {27, "大约一个月"},
+      {37, "大约一个月"},
+      {38, "大约一个半月"},
+      {51, "大约一个半月"},
+      {52, "两个月"},
+      {74, "两个月"},
+      {75, "两个月"},
+      {76, "三个月"},
+      {364, "12 个月"},
+      {365, "大约一年"},
+      {729, "大约一年"},
+      {730, "超过两年"},
+      {1459, "超过四年"},
+      {1460, "几乎四年"},
+    }.each do |days, expected|
+      it "describes #{days} days as #{expected}" do
+        from_time = Time.utc(2026, 1, 1)
+
+        ZHHelpers.distance(from: from_time, to: from_time + days.days).should eq expected
+      end
     end
 
     it "takes a Time::Span" do

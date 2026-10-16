@@ -22,8 +22,8 @@ module TimeInWords
 
       def distance_in_days(distance : Int32) : String
         case distance
-        when 27...35  then "大约#{Map[1]}个月"
-        when 40...52  then "大约#{Map[1]}个半月"
+        when 27...38  then "大约#{Map[1]}个月"
+        when 38...52  then "大约#{Map[1]}个半月"
         when 52...365 then "#{Map[(distance / 30).round.to_i]}个月"
         when 365...730
           "大约#{Map[1]}年"
