@@ -26,9 +26,35 @@ describe TimeInWords do
       {26.days + 11.hours + 59.minutes + 29.seconds, "26 days", "26 天"},
       {26.days + 11.hours + 59.minutes + 30.seconds, "27 days", "27 天"},
       {27.days - 1.second, "27 days", "27 天"},
-      {27.days, "about a month", "大约一个月"},
+      {27.days, "27 days", "27 天"},
     }.each do |span, english, chinese|
       it "describes #{span} at a unit boundary" do
+        EnglishTimeHelper.distance(span: span).should eq english
+        ChineseTimeHelper.distance(span: span).should eq chinese
+      end
+    end
+  end
+
+  describe "month boundaries" do
+    {
+      {30.days - 31.seconds, "30 days", "30 天"},
+      {30.days - 30.seconds, "30 days", "30 天"},
+      {30.days, "about a month", "大约一个月"},
+      {38.days - 31.seconds, "about a month", "大约一个月"},
+      {38.days - 30.seconds, "about a month", "大约一个月"},
+      {45.days - 31.seconds, "about a month", "大约一个半月"},
+      {45.days - 30.seconds, "about a month", "大约一个半月"},
+      {45.days, "about 2 months", "大约一个半月"},
+      {52.days - 31.seconds, "about 2 months", "大约一个半月"},
+      {52.days - 30.seconds, "about 2 months", "大约一个半月"},
+      {60.days - 31.seconds, "about 2 months", "两个月"},
+      {60.days - 30.seconds, "about 2 months", "两个月"},
+      {60.days, "2 months", "两个月"},
+      {75.days - 31.seconds, "2 months", "两个月"},
+      {75.days - 30.seconds, "2 months", "两个月"},
+      {365.days - 30.seconds, "12 months", "12 个月"},
+    }.each do |span, english, chinese|
+      it "describes #{span} at a month boundary" do
         EnglishTimeHelper.distance(span: span).should eq english
         ChineseTimeHelper.distance(span: span).should eq chinese
       end
@@ -121,7 +147,11 @@ describe TimeInWords do
       {now - 60.hours, "3 days ago", "三天前"},
       {Time.local(2026, 10, 23, location: location), "in 2 days", "两天后"},
       {now - 27.days + 1.second, "27 days ago", "27 天前"},
-      {now - 27.days, "about a month ago", "大约一个月前"},
+      {now - 27.days, "27 days ago", "27 天前"},
+      {now - 30.days + 31.seconds, "30 days ago", "30 天前"},
+      {now - 30.days + 30.seconds, "30 days ago", "30 天前"},
+      {now - 30.days, "about a month ago", "大约一个月前"},
+      {now + 45.days, "in about 2 months", "大约一个半月后"},
     }.each do |time, english, chinese|
       it "describes #{time} relative to #{now} in Shanghai" do
         EnglishTimeHelper.from(time: time, now: now).should eq english

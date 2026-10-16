@@ -23,7 +23,7 @@ module TimeInWords
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2019, 8, 16))
     # # => "2 days"
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2019, 10, 4))
-    # # => "about a month"
+    # # => "about 2 months"
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2061, 10, 4))
     # # => "about 42 years"
     # ```
@@ -86,7 +86,7 @@ module TimeInWords
       span = span.abs
 
       return distance_in_years(span) if span >= 365.days
-      return T.distance_in_days(span.days.to_i32) if span >= 27.days
+      return T.distance_in_days(span.days.to_i32) if span >= 30.days
       return T.distance_in_seconds(span.seconds) if span < 1.minute
 
       minutes = span.total_minutes.round(:ties_away).to_i32

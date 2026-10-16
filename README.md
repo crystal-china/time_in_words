@@ -45,9 +45,12 @@ of its dates or the sign of its span. `from` adds `ago` / `前` for past times a
 `in` / `后` for future times; the Chinese result for the current moment is `刚刚`.
 
 Both methods describe elapsed duration rather than calendar date differences.
-Day-level descriptions use Rails-style rounding: 60 hours becomes 3 days,
-regardless of the input time zones. Second, month, and year descriptions keep
-their existing rules.
+Day-level descriptions use Rails-style minute rounding: 60 hours becomes
+3 days, regardless of the input time zones. Month descriptions use complete
+elapsed days and start at 30 days. English uses "about 2 months" from 45 days
+up to, but not including, 60 days. Chinese keeps "大约一个半月" from 38 days
+up to, but not including, 52 days.
+Second and year descriptions keep their existing rules.
 
 ```crystal
 now = Time.utc(2026, 10, 20, 14)

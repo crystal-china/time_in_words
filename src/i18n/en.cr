@@ -13,8 +13,9 @@ module TimeInWords
 
       def distance_in_days(distance : Int32) : String
         case distance
-        when 1...27  then days(distance)
-        when 27...60 then "about a month"
+        when 1...30  then days(distance)
+        when 30...45 then "about a month"
+        when 45...60 then "about 2 months"
         else
           "#{(distance / 30).round(:ties_away).to_i} months"
         end
