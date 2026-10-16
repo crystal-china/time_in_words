@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="generator" content="Crystal Docs 1.21.0">
+<meta name="crystal_docs.project_version" content="master">
+<meta name="crystal_docs.project_name" content="time_in_words">
+
+
+
+<link href="css/style.css" rel="stylesheet" type="text/css" />
+<script type="text/javascript" src="js/doc.js"></script>
+
+  <meta name="repository-name" content="time_in_words">
+  <title>time_in_words master</title>
+  <script type="text/javascript">
+  CrystalDocs.base_path = "";
+  </script>
+</head>
+<body>
+
+<svg class="hidden">
+  <symbol id="octicon-link" viewBox="0 0 16 16">
+    <path fill="currentColor" fill-rule="evenodd" d="M4 9h1v1H4c-1.5 0-3-1.69-3-3.5S2.55 3 4 3h4c1.45 0 3 1.69 3 3.5 0 1.41-.91 2.72-2 3.25V8.59c.58-.45 1-1.27 1-2.09C10 5.22 8.98 4 8 4H4c-.98 0-2 1.22-2 2.5S3 9 4 9zm9-3h-1v1h1c1 0 2 1.22 2 2.5S13.98 12 13 12H9c-.98 0-2-1.22-2-2.5 0-.83.42-1.64 1-2.09V6.25c-1.09.53-2 1.84-2 3.25C6 11.31 7.55 13 9 13h4c1.45 0 3-1.69 3-3.5S14.5 6 13 6z"></path>
+  </symbol>
+</svg>
+<input type="checkbox" id="sidebar-btn">
+<label for="sidebar-btn" id="sidebar-btn-label">
+  <svg class="open" xmlns="http://www.w3.org/2000/svg" height="2em" width="2em" viewBox="0 0 512 512"><title>Open Sidebar</title><path fill="currentColor" d="M80 96v64h352V96H80zm0 112v64h352v-64H80zm0 112v64h352v-64H80z"></path></svg>
+  <svg class="close" xmlns="http://www.w3.org/2000/svg" width="2em" height="2em" viewBox="0 0 512 512"><title>Close Sidebar</title><path fill="currentColor" d="m118.6 73.4-45.2 45.2L210.7 256 73.4 393.4l45.2 45.2L256 301.3l137.4 137.3 45.2-45.2L301.3 256l137.3-137.4-45.2-45.2L256 210.7Z"></path></svg>
+</label>
+<div class="sidebar">
+  <div class="sidebar-header">
+    <div class="search-box">
+      <input type="search" class="search-input" placeholder="Search..." spellcheck="false" aria-label="Search">
+    </div>
+
+    <div class="project-summary">
+      <h1 class="project-name">
+        <a href="index.html">
+          time_in_words
+        </a>
+      </h1>
+
+      <span class="project-version">
+        master
+      </span>
+    </div>
+  </div>
+
+  <div class="search-results hidden">
+    <ul class="search-list"></ul>
+  </div>
+
+  <div class="types-list">
+    <ul>
+  
+  <li class="parent " data-id="time_in_words/TimeInWords" data-name="timeinwords">
+      <a href="TimeInWords.html">TimeInWords</a>
+      
+        <ul>
+  
+  <li class=" " data-id="time_in_words/TimeInWords/Helpers" data-name="timeinwords::helpers(t)">
+      <a href="TimeInWords/Helpers.html">Helpers</a>
+      
+    </li>
+  
+  <li class="parent " data-id="time_in_words/TimeInWords/I18n" data-name="timeinwords::i18n">
+      <a href="TimeInWords/I18n.html">I18n</a>
+      
+        <ul>
+  
+  <li class=" " data-id="time_in_words/TimeInWords/I18n/EN" data-name="timeinwords::i18n::en">
+      <a href="TimeInWords/I18n/EN.html">EN</a>
+      
+    </li>
+  
+  <li class=" " data-id="time_in_words/TimeInWords/I18n/ZH_CN" data-name="timeinwords::i18n::zh_cn">
+      <a href="TimeInWords/I18n/ZH_CN.html">ZH_CN</a>
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+      
+    </li>
+  
+</ul>
+
+  </div>
+</div>
+
+
+<div class="main-content">
+<h1><a id="time-in-words" class="anchor" href="#time-in-words">  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>time_in_words</h1>
+<p>All code stolen from <a href="https://github.com/luckyframework/lucky/blob/main/src/lucky/page_helpers/time_helpers.cr">lucky framework time_helpers</a>, but added the Chinese support.</p>
+<p>Only EN and ZH_CN supported for now, PR is welcome.</p>
+<p>The locale name will follow name in <a href="https://github.com/crystal-i18n/i18n/blob/a0d6276114a31f233cfec4ac928a01051ab01aa2/src/i18n/pluralization.cr#L33-L178">this</a> file.</p>
+<h2><a id="installation" class="anchor" href="#installation">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Installation</h2>
+<ol>
+<li>
+<p>Add the dependency to your <code>shard.yml</code>:</p>
+<pre><code class="language-yaml">dependencies:
+  time_in_words:
+    github: crystal_china/time_in_words</code></pre>
+</li>
+<li>
+<p>Run <code>shards install</code></p>
+</li>
+</ol>
+<h2><a id="usage" class="anchor" href="#usage">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Usage</h2>
+<pre><code class="language-crystal"><span class="k">require</span> <span class="s">&quot;time_in_words&quot;</span>
+
+<span class="k">alias</span> <span class="t">TimeHelper</span> <span class="o">=</span> <span class="t">TimeInWords</span><span class="t">::</span><span class="t">Helpers</span>(<span class="t">TimeInWords</span><span class="t">::</span><span class="t">I18n</span><span class="t">::</span><span class="t">ZH_CN</span>)
+
+<span class="t">TimeHelper</span>.from(time: <span class="t">Time</span>.local <span class="o">-</span> <span class="n">13</span>.months) <span class="c"># =&gt; &quot;大约一年前&quot;</span>
+
+from_time <span class="o">=</span> <span class="t">Time</span>.local
+<span class="t">TimeHelper</span>.distance(from: from_time, to: from_time <span class="o">+</span> <span class="n">50</span>.minutes) <span class="c"># =&gt; &quot;大约一个小时&quot;</span>
+<span class="t">TimeHelper</span>.distance(from: from_time, to: from_time <span class="o">+</span> <span class="n">35</span>.minutes) <span class="c"># =&gt; &quot;35 分钟&quot;</span>
+
+span <span class="o">=</span> <span class="n">4</span>.minutes
+<span class="t">TimeHelper</span>.distance(span: span) <span class="c"># =&gt; &quot;四分钟&quot;</span>
+
+<span class="t">TimeHelper</span>.distance(span: <span class="t">Time</span><span class="t">::</span><span class="t">Span</span>.zero) <span class="c"># =&gt; &quot;零秒&quot;</span>
+<span class="t">TimeHelper</span>.from(time: <span class="t">Time</span>.utc)            <span class="c"># =&gt; &quot;刚刚&quot;</span></code></pre>
+<p>Check the <a href="spec/time_in_words_en_spec.cr">time_in_words_en_spec.cr</a> for usage about English time words.</p>
+<p>In both languages, <code>distance</code> returns only the duration, regardless of the order
+of its dates or the sign of its span. <code>from</code> adds <code>ago</code> / <code>前</code> for past times and
+<code>in</code> / <code>后</code> for future times; the Chinese result for the current moment is <code>刚刚</code>.</p>
+<p>Both methods describe elapsed duration rather than calendar date differences.
+Day-level descriptions use Rails-style minute rounding: 60 hours becomes
+3 days, regardless of the input time zones. Month descriptions use complete
+elapsed days and start at 30 days. English uses &quot;about 2 months&quot; from 45 days
+up to, but not including, 60 days. Chinese keeps &quot;大约一个半月&quot; from 38 days
+up to, but not including, 52 days.
+Second and year descriptions keep their existing rules.</p>
+<pre><code class="language-crystal">now <span class="o">=</span> <span class="t">Time</span>.utc(<span class="n">2026</span>, <span class="n">10</span>, <span class="n">20</span>, <span class="n">14</span>)
+posted_at <span class="o">=</span> now <span class="o">-</span> <span class="n">60</span>.hours
+
+<span class="t">TimeHelper</span>.from(time: posted_at, now: now) <span class="c"># =&gt; &quot;三天前&quot;</span></code></pre>
+<p><code>now</code> is optional and defaults to the current time. Pass it when you need a fixed
+reference time, such as in tests or when rendering several timestamps together.</p>
+<p>Year descriptions follow Rails' approximate / over / almost thresholds. Date
+pairs account for leap days; a bare <code>Time::Span</code> uses fixed 365-day years because
+it has no calendar dates.</p>
+<pre><code class="language-crystal"><span class="k">alias</span> <span class="t">EnglishTimeHelper</span> <span class="o">=</span> <span class="t">TimeInWords</span><span class="t">::</span><span class="t">Helpers</span>(<span class="t">TimeInWords</span><span class="t">::</span><span class="t">I18n</span><span class="t">::</span><span class="t">EN</span>)
+
+<span class="t">EnglishTimeHelper</span>.from(time: <span class="t">Time</span>.utc <span class="o">-</span> <span class="n">2</span>.hours) <span class="c"># =&gt; &quot;about 2 hours ago&quot;</span>
+<span class="t">EnglishTimeHelper</span>.distance(span: <span class="n">2</span>.hours)       <span class="c"># =&gt; &quot;about 2 hours&quot;</span></code></pre>
+<h2><a id="development" class="anchor" href="#development">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Development</h2>
+<p><span class="flag orange">TODO</span>  Write development instructions here</p>
+<h2><a id="contributing" class="anchor" href="#contributing">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributing</h2>
+<ol>
+<li>Fork it (<a href="https://github.com/zw963/time_in_words/fork">https://github.com/zw963/time_in_words/fork</a>)</li>
+<li>Run <code>make</code> to ensure spec passed.</li>
+<li>Create your feature branch (<code>git checkout -b my-new-feature</code>)</li>
+<li>Commit your changes (<code>git commit -am 'Add some feature'</code>)</li>
+<li>Run <code>make</code> again to ensure spec passed.</li>
+<li>Push to the branch (<code>git push origin my-new-feature</code>)</li>
+<li>Create a new Pull Request</li>
+</ol>
+<h2><a id="contributors" class="anchor" href="#contributors">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Contributors</h2>
+<ul>
+<li><a href="https://github.com/zw963">Billy.Zheng</a> - creator and maintainer</li>
+</ul>
+</div>
+</body>
+</html>
