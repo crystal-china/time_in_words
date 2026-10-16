@@ -25,6 +25,12 @@ describe "TimeInWords" do
       Helpers.distance(from: from_time, to: from_time + 10.years).should eq "almost 10 years"
     end
 
+    { {74, "2 months"}, {75, "3 months"}, {76, "3 months"} }.each do |days, expected|
+      it "describes #{days} days as #{expected}" do
+        Helpers.distance(span: days.days).should eq expected
+      end
+    end
+
     it "takes a Time::Span" do
       span = 4.minutes
       Helpers.distance(span: span).should eq "4 minutes"
