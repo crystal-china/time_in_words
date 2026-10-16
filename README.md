@@ -44,17 +44,16 @@ In both languages, `distance` returns only the duration, regardless of the order
 of its dates or the sign of its span. `from` adds `ago` / `前` for past times and
 `in` / `后` for future times; the Chinese result for the current moment is `刚刚`.
 
-For elapsed times of at least 24 hours and less than 27 days, `from` compares
-calendar dates in `location` (UTC by default). Shorter relative times stay in
-seconds, minutes, or hours; month and year descriptions keep their existing
-rules. `distance` always describes elapsed duration, not calendar date differences.
+Both methods describe elapsed duration rather than calendar date differences.
+Day-level descriptions use Rails-style rounding: 60 hours becomes 3 days,
+regardless of the input time zones. Second, month, and year descriptions keep
+their existing rules.
 
 ```crystal
-location = Time::Location.load("Asia/Shanghai")
-now = Time.local(2026, 10, 20, 14, location: location)
-posted_at = Time.local(2026, 10, 17, location: location)
+now = Time.utc(2026, 10, 20, 14)
+posted_at = now - 60.hours
 
-TimeHelper.from(time: posted_at, location: location, now: now) # => "三天前"
+TimeHelper.from(time: posted_at, now: now) # => "三天前"
 ```
 
 `now` is optional and defaults to the current time. Pass it when you need a fixed
