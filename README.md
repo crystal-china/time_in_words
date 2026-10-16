@@ -28,16 +28,20 @@ alias TimeHelper = TimeInWords::Helpers(TimeInWords::I18n::ZH_CN)
 TimeHelper.from(past_time: Time.local - 13.months) # => "大约一年前"
 
 from_time = Time.local
-TimeHelper.distance(from: from_time, to: from_time + 50.minutes) # => "大约一个小时前"
-TimeHelper.distance(from: from_time, to: from_time + 35.minutes) # => "35 分钟前"
+TimeHelper.distance(from: from_time, to: from_time + 50.minutes) # => "大约一个小时"
+TimeHelper.distance(from: from_time, to: from_time + 35.minutes) # => "35 分钟"
 
 span = 4.minutes
-TimeHelpers.distance(span: span) # => "四分钟前"
+TimeHelper.distance(span: span) # => "四分钟"
+
+TimeHelper.distance(span: Time::Span.zero) # => "零秒"
+TimeHelper.from(past_time: Time.utc)       # => "刚刚"
 ```
 
 Check the [time_in_words_en_spec.cr](spec/time_in_words_en_spec.cr) for usage about English time words.
 
-English `from` includes `ago`; `distance` still returns only the duration:
+In both languages, `distance` returns only the duration. `from` adds `ago` in
+English or `前` in Chinese; the Chinese result for the current moment is `刚刚`.
 
 ```crystal
 alias EnglishTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::EN)

@@ -3,6 +3,10 @@ module TimeInWords
     module EN
       extend self
 
+      def ago(words : String) : String
+        "#{words} ago"
+      end
+
       def distance_in_days(distance : Int32) : String
         case distance
         when 1...27   then distance == 1 ? "a day" : "#{distance} days"
