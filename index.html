@@ -128,6 +128,18 @@
 <p>Run <code>shards install</code></p>
 </li>
 </ol>
+<h2><a id="breaking-changes" class="anchor" href="#breaking-changes">
+  <svg class="octicon-link" aria-hidden="true">
+    <use href="#octicon-link"/>
+  </svg>
+</a>Breaking Changes</h2>
+<p>The <code>from</code> method's <code>past_time:</code> keyword argument has been renamed to <code>time:</code>
+because it supports both past and future times. Update existing calls:</p>
+<pre><code class="language-crystal"><span class="c"># Before</span>
+<span class="t">TimeHelper</span>.from(past_time: posted_at)
+
+<span class="c"># After</span>
+<span class="t">TimeHelper</span>.from(time: posted_at)</code></pre>
 <h2><a id="usage" class="anchor" href="#usage">
   <svg class="octicon-link" aria-hidden="true">
     <use href="#octicon-link"/>
