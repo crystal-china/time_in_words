@@ -12,10 +12,10 @@ describe "TimeInWords" do
       ZHHelpers.distance(from: from_time, to: from_time + 2.minutes).should eq "两分钟"
       ZHHelpers.distance(from: from_time, to: from_time + 35.minutes).should eq "35 分钟"
       ZHHelpers.distance(from: from_time, to: from_time + 50.minutes).should eq "大约一个小时"
-      ZHHelpers.distance(from: from_time, to: from_time + 1.hour).should eq "一个小时"
+      ZHHelpers.distance(from: from_time, to: from_time + 1.hour).should eq "大约一个小时"
       ZHHelpers.distance(from: from_time, to: from_time + 110.minutes).should eq "大约两小时"
       ZHHelpers.distance(from: from_time, to: from_time + 350.minutes).should eq "大约六小时"
-      ZHHelpers.distance(from: from_time, to: from_time + 2.hours).should eq "两小时"
+      ZHHelpers.distance(from: from_time, to: from_time + 2.hours).should eq "大约两小时"
       ZHHelpers.distance(from: from_time, to: from_time + 1.day).should eq "一天"
       ZHHelpers.distance(from: from_time, to: from_time + 10.days).should eq "十天"
     end

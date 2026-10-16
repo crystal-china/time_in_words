@@ -50,23 +50,12 @@ module TimeInWords
         "几乎#{Map[years]}年"
       end
 
-      def distance_in_hours(hours : Int32, minutes : Int32) : String
-        if minutes >= 45
-          "大约#{Map[hours + 1]}小时"
-        elsif hours == 1
-          "#{Map[1]}个小时"
-        else
-          "#{Map[hours]}小时"
-        end
+      def distance_in_hours(hours : Int32) : String
+        hours == 1 ? "大约一个小时" : "大约#{Map[hours]}小时"
       end
 
       def distance_in_minutes(distance : Int32) : String
-        case distance
-        when 1      then "#{Map[1]}分钟"
-        when 2...45 then "#{Map[distance]}分钟"
-        else
-          "大约#{Map[1]}个小时"
-        end
+        "#{Map[distance]}分钟"
       end
 
       def distance_in_seconds(distance : Int32) : String

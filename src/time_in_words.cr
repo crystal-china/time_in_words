@@ -19,7 +19,7 @@ module TimeInWords
     # distance_of_time_in_words(Time.utc(2019, 8, 14, 10, 0), Time.utc(2019, 8, 14, 10, 25))
     # # => "25 minutes"
     # distance_of_time_in_words(Time.utc(2019, 8, 14, 10), Time.utc(2019, 8, 14, 11))
-    # # => "an hour"
+    # # => "about an hour"
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2019, 8, 16))
     # # => "2 days"
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2019, 10, 4))
@@ -87,17 +87,21 @@ module TimeInWords
       span = span.abs
 
       return distance_in_years(span) if span >= 365.days
+      return T.distance_in_days(span.days.to_i32) if span >= 27.days
+      return T.distance_in_seconds(span.seconds) if span < 1.minute
 
-      minutes = span.minutes.to_i32
-      seconds = span.seconds.to_i32
-      hours = span.hours.to_i32
-      days = span.days.to_i32
+      minutes = span.total_minutes.round(:ties_away).to_i32
 
-      return T.distance_in_days(days) if days != 0
-      return T.distance_in_hours(hours, minutes) if hours != 0
-      return T.distance_in_minutes(minutes) if minutes != 0
-
-      T.distance_in_seconds(seconds)
+      case minutes
+      when 1...45
+        T.distance_in_minutes(minutes)
+      when 45...1440
+        T.distance_in_hours((minutes / 60).round(:ties_away).to_i32)
+      when 1440...2520
+        T.days(1)
+      else
+        T.days((minutes / 1440).round(:ties_away).to_i32)
+      end
     end
 
     private def distance_in_years(span : Time::Span) : String

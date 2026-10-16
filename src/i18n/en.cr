@@ -36,23 +36,12 @@ module TimeInWords
         "almost #{years} #{years == 1 ? "year" : "years"}"
       end
 
-      def distance_in_hours(hours : Int32, minutes : Int32) : String
-        if minutes >= 45
-          "almost #{hours + 1} hours"
-        elsif hours == 1
-          "an hour"
-        else
-          "#{hours} hours"
-        end
+      def distance_in_hours(hours : Int32) : String
+        hours == 1 ? "about an hour" : "about #{hours} hours"
       end
 
       def distance_in_minutes(distance : Int32) : String
-        case distance
-        when 1      then "a minute"
-        when 2...45 then "#{distance} minutes"
-        else
-          "about an hour"
-        end
+        distance == 1 ? "a minute" : "#{distance} minutes"
       end
 
       def distance_in_seconds(distance : Int32) : String
