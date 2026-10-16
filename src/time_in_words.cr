@@ -44,7 +44,7 @@ module TimeInWords
       if span >= 365.days
         # Match Rails: discount leap days before choosing the year phrase.
 
-        # 处理闰年二月份多一天的情况，因为闰年无法 365 整除，可能对年份误判。
+        # 处理闰年二月份多一天的情况，365 整除取余时，可能对年份误判。
 
         # 数哪些年份的 2 月可能落在这段时间内。
         # 开始年份过了二月，from + 1 从下一年开始数
@@ -70,7 +70,6 @@ module TimeInWords
         end
 
         # 扣除区间内所有闰年额外的一天，减少按每年 365 天计算时的偏差
-        # span - leap_days.days 总是可以被 365 整除，不会算错年份。
         return distance_in_years(span - leap_days.days)
       end
 

@@ -43,8 +43,8 @@ lib: ## Run shards install to install dependencies
 
 .PHONY: spec
 spec: $(SPEC_SOURCES) $(SOURCES) $(LIB_SOURCES) lib bin ## Run spec
-	$(COMPILER) spec $(FLAGS) spec/time_in_words_en_spec.cr --order=random --error-on-warnings
-	$(COMPILER) spec $(FLAGS) spec/time_in_words_zh_cn_spec.cr --order=random --error-on-warnings
+	$(COMPILER) spec $(FLAGS) --order=random --error-on-warnings
+
 
 .PHONY: format
 format: ## Apply source code formatting
