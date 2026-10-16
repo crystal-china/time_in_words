@@ -37,6 +37,15 @@ TimeHelpers.distance(span: span) # => "四分钟前"
 
 Check the [time_in_words_en_spec.cr](spec/time_in_words_en_spec.cr) for usage about English time words.
 
+English `from` includes `ago`; `distance` still returns only the duration:
+
+```crystal
+alias EnglishTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::EN)
+
+EnglishTimeHelper.from(past_time: Time.utc - 2.hours) # => "2 hours ago"
+EnglishTimeHelper.distance(span: 2.hours)            # => "2 hours"
+```
+
 ## Development
 
 TODO: Write development instructions here

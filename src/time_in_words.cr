@@ -31,7 +31,10 @@ module TimeInWords
 
     # Returns a `String` with approximate distance in time between `from` and current moment.
     def from(*, past_time : Time) : String
-      time_in_words(from: past_time)
+      words = time_in_words(from: past_time)
+
+      # Chinese distance strings already include the past-time suffix.
+      T == I18n::EN ? "#{words} ago" : words
     end
 
     private def distance_of_time_in_words(*, from : Time, to : Time) : String
