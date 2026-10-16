@@ -21,8 +21,8 @@ describe "TimeInWords" do
       Helpers.distance(from: from_time, to: from_time + 1.month).should eq "about a month"
       Helpers.distance(from: from_time, to: from_time + 10.months).should eq "10 months"
       Helpers.distance(from: from_time, to: from_time + 12.months).should eq "about a year"
-      Helpers.distance(from: from_time, to: from_time + 2.years).should eq "over 2 years"
-      Helpers.distance(from: from_time, to: from_time + 10.years).should eq "almost 10 years"
+      Helpers.distance(from: from_time, to: from_time + 2.years).should eq "about 2 years"
+      Helpers.distance(from: from_time, to: from_time + 10.years).should eq "about 10 years"
     end
 
     { {74, "2 months"}, {75, "3 months"}, {76, "3 months"} }.each do |days, expected|

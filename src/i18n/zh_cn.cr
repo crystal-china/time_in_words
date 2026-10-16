@@ -25,15 +25,21 @@ module TimeInWords
         when 27...38  then "大约#{Map[1]}个月"
         when 38...52  then "大约#{Map[1]}个半月"
         when 52...365 then "#{Map[(distance / 30).round(:ties_away).to_i]}个月"
-        when 365...730
-          "大约#{Map[1]}年"
-        when 730...1460
-          "超过#{Map[(distance / 365).round.to_i]}年"
-        when 1460...
-          "几乎#{Map[(distance / 365).round.to_i]}年"
         else
           "#{Map[distance]}天"
         end
+      end
+
+      def about_years(years : Int32) : String
+        "大约#{Map[years]}年"
+      end
+
+      def over_years(years : Int32) : String
+        "超过#{Map[years]}年"
+      end
+
+      def almost_years(years : Int32) : String
+        "几乎#{Map[years]}年"
       end
 
       def distance_in_hours(hours : Int32, minutes : Int32) : String

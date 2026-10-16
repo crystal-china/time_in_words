@@ -18,7 +18,7 @@ module TimeInWords
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2019, 10, 4))
     # # => "about a month"
     # distance_of_time_in_words(Time.utc(2019, 8, 14), Time.utc(2061, 10, 4))
-    # # => "almost 42 years"
+    # # => "about 42 years"
     # ```
     def distance(*, from : Time, to : Time) : String
       distance_of_time_in_words(from: from, to: to)
@@ -41,6 +41,9 @@ module TimeInWords
 
     private def distance_of_time_in_words(*, span : Time::Span) : String
       span = span.abs
+
+      return distance_in_years(span) if span >= 365.days
+
       minutes = span.minutes.to_i32
       seconds = span.seconds.to_i32
       hours = span.hours.to_i32
@@ -55,6 +58,19 @@ module TimeInWords
 
     private def time_in_words(*, from : Time) : String
       distance_of_time_in_words(from: from, to: Time.utc)
+    end
+
+    private def distance_in_years(span : Time::Span) : String
+      years = (span.days // 365).to_i32
+      remainder = span - (years * 365).days
+
+      if remainder < 365.days / 4
+        T.about_years(years)
+      elsif remainder < 365.days * 3 / 4
+        T.over_years(years)
+      else
+        T.almost_years(years + 1)
+      end
     end
   end
 end
