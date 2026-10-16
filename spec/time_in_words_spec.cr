@@ -24,6 +24,25 @@ describe TimeInWords do
       end
     end
   end
+
+  describe "calendar years" do
+    {
+      {Time.utc(2020, 1, 1), Time.utc(2021, 1, 1), "about a year", "大约一年"},
+      {Time.utc(2020, 1, 1), Time.utc(2021, 4, 2), "about a year", "大约一年"},
+      {Time.utc(1900, 1, 1), Time.utc(1901, 4, 3), "over 1 year", "超过一年"},
+      {Time.utc(2000, 1, 1), Time.utc(2001, 4, 2), "about a year", "大约一年"},
+      {Time.utc(2026, 1, 1), Time.utc(2030, 1, 1), "about 4 years", "大约四年"},
+      {Time.utc(2020, 1, 1), Time.utc(2100, 1, 1), "about 80 years", "大约80 年"},
+    }.each do |from, to, english, chinese|
+      it "discounts leap days between #{from} and #{to}" do
+        EnglishTimeHelper.distance(from: from, to: to).should eq english
+        ChineseTimeHelper.distance(from: from, to: to).should eq chinese
+        EnglishTimeHelper.distance(from: to, to: from).should eq english
+        ChineseTimeHelper.distance(from: to, to: from).should eq chinese
+      end
+    end
+  end
+
   describe "reversed distances" do
     {0.seconds, 5.seconds, 5.minutes, 2.hours, 3.days, 400.days}.each do |span|
       it "treats #{span} and its negative as the same distance" do

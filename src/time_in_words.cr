@@ -36,7 +36,42 @@ module TimeInWords
 
     private def distance_of_time_in_words(*, from : Time, to : Time) : String
       from, to = to, from if from > to
-      distance_of_time_in_words(span: to - from)
+      span = to - from
+
+      if span >= 365.days
+        # Match Rails: discount leap days before choosing the year phrase.
+
+        # 处理闰年二月份多一天的情况，因为闰年无法 365 整除，可能对年份误判。
+
+        # 数哪些年份的 2 月可能落在这段时间内。
+        # 开始年份过了二月，from + 1 从下一年开始数
+        # 结束年份 2 月 29 日还没到，to - 1，因此这一年不计入
+        from_year = from.year + (from.month >= 3 ? 1 : 0)
+        to_year = to.year - (to.month < 3 ? 1 : 0)
+        leap_days = 0
+
+        if from_year <= to_year
+          # 公历闰年规则：
+
+          # • 能被 4 整除，通常是闰年。
+          # • 能被 100 整除，排除。
+          # • 但能被 400 整除，再加回来。
+          # 例如：截至 2024 年：506 - 20 + 5 = 491
+
+          # 先算到前一年有多少闰年
+          # 再算到截止年有多少闰年。
+          # 减一下就知道区间内有几个闰年了。
+          previous_year = from_year - 1
+          leap_days = (to_year // 4 - to_year // 100 + to_year // 400) -
+                      (previous_year // 4 - previous_year // 100 + previous_year // 400)
+        end
+
+        # 扣除区间内所有闰年额外的一天，减少按每年 365 天计算时的偏差
+        # span - leap_days.days 总是可以被 365 整除，不会算错年份。
+        return distance_in_years(span - leap_days.days)
+      end
+
+      distance_of_time_in_words(span: span)
     end
 
     private def distance_of_time_in_words(*, span : Time::Span) : String
