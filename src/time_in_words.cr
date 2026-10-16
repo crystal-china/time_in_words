@@ -35,10 +35,12 @@ module TimeInWords
     end
 
     private def distance_of_time_in_words(*, from : Time, to : Time) : String
+      from, to = to, from if from > to
       distance_of_time_in_words(span: to - from)
     end
 
     private def distance_of_time_in_words(*, span : Time::Span) : String
+      span = span.abs
       minutes = span.minutes.to_i32
       seconds = span.seconds.to_i32
       hours = span.hours.to_i32
