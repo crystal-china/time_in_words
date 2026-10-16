@@ -36,10 +36,27 @@ module TimeInWords
       distance_of_time_in_words(span: span)
     end
 
-    # Returns the approximate distance from now, with a past or future phrase.
-    def from(*, time : Time) : String
-      now = Time.utc
-      words = distance_of_time_in_words(from: time, to: now)
+    # Returns the relative time, using calendar dates for day-level descriptions.
+    def from(*, time : Time, location : Time::Location = Time::Location::UTC, now : Time = Time.utc) : String
+      span = (time - now).abs
+      words = if span >= 1.day && span < 27.days
+                # 这里使用基于时区的 date 返回的值作为 date
+                # 因此几天前中的 "几天"，是真正意义本地时间的天。
+                target_date = Time.utc(*time.in(location).date)
+                current_date = Time.utc(*now.in(location).date)
+
+                # 计算准确地天数。
+                days = (target_date - current_date).days.abs.to_i32
+
+                # A 25-hour local day can contain 24 elapsed hours without changing dates.
+                # 夏令时回拨时，一天可能有 25 小时，确保没有 0 天前
+                T.days(Math.max(days, 1))
+              elsif span < 1.day && span >= (1.day - 30.seconds)
+                # Relative times below 24 hours must not round up to a day.
+                T.distance_in_hours(24)
+              else
+                distance_of_time_in_words(from: time, to: now)
+              end
 
       time > now ? T.from_now(words) : T.ago(words)
     end

@@ -44,6 +44,22 @@ In both languages, `distance` returns only the duration, regardless of the order
 of its dates or the sign of its span. `from` adds `ago` / `前` for past times and
 `in` / `后` for future times; the Chinese result for the current moment is `刚刚`.
 
+For elapsed times of at least 24 hours and less than 27 days, `from` compares
+calendar dates in `location` (UTC by default). Shorter relative times stay in
+seconds, minutes, or hours; month and year descriptions keep their existing
+rules. `distance` always describes elapsed duration, not calendar date differences.
+
+```crystal
+location = Time::Location.load("Asia/Shanghai")
+now = Time.local(2026, 10, 20, 14, location: location)
+posted_at = Time.local(2026, 10, 17, location: location)
+
+TimeHelper.from(time: posted_at, location: location, now: now) # => "三天前"
+```
+
+`now` is optional and defaults to the current time. Pass it when you need a fixed
+reference time, such as in tests or when rendering several timestamps together.
+
 Year descriptions follow Rails' approximate / over / almost thresholds. Date
 pairs account for leap days; a bare `Time::Span` uses fixed 365-day years because
 it has no calendar dates.
@@ -51,8 +67,8 @@ it has no calendar dates.
 ```crystal
 alias EnglishTimeHelper = TimeInWords::Helpers(TimeInWords::I18n::EN)
 
-EnglishTimeHelper.from(time: Time.utc - 2.hours)      # => "2 hours ago"
-EnglishTimeHelper.distance(span: 2.hours)            # => "2 hours"
+EnglishTimeHelper.from(time: Time.utc - 2.hours) # => "about 2 hours ago"
+EnglishTimeHelper.distance(span: 2.hours)       # => "about 2 hours"
 ```
 
 ## Development

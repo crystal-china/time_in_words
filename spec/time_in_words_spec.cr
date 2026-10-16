@@ -95,10 +95,67 @@ describe TimeInWords do
 
   describe "future times" do
     it "uses a future phrase instead of ago" do
-      future = Time.utc + 2.days + 30.seconds
+      now = Time.utc(2026, 10, 20, 12)
+      future = now + 2.days + 30.seconds
 
-      EnglishTimeHelper.from(time: future).should eq "in 2 days"
-      ChineseTimeHelper.from(time: future).should eq "两天后"
+      EnglishTimeHelper.from(time: future, now: now).should eq "in 2 days"
+      ChineseTimeHelper.from(time: future, now: now).should eq "两天后"
+    end
+  end
+
+  describe "relative calendar days" do
+    location = Time::Location.load("Asia/Shanghai")
+    now = Time.local(2026, 10, 20, 14, location: location)
+
+    {
+      {Time.local(2026, 10, 17, location: location), "3 days ago", "三天前"},
+      {Time.local(2026, 10, 17, 23, location: location), "3 days ago", "三天前"},
+      {Time.local(2026, 10, 18, 23, location: location), "2 days ago", "两天前"},
+      {now - 15.hours, "about 15 hours ago", "大约15 小时前"},
+      {now - 1.day + 1.second, "about 24 hours ago", "大约24 小时前"},
+      {now - 1.day, "a day ago", "一天前"},
+      {now + 1.day - 1.second, "in about 24 hours", "大约24 小时后"},
+      {now + 1.day, "in a day", "一天后"},
+      {Time.local(2026, 10, 23, location: location), "in 3 days", "三天后"},
+      {now - 27.days + 1.second, "27 days ago", "27 天前"},
+      {now - 27.days, "about a month ago", "大约一个月前"},
+    }.each do |time, english, chinese|
+      it "describes #{time} relative to #{now} in Shanghai" do
+        EnglishTimeHelper.from(time: time.to_utc, location: location, now: now.to_utc).should eq english
+        ChineseTimeHelper.from(time: time.to_utc, location: location, now: now.to_utc).should eq chinese
+      end
+    end
+
+    it "defaults to UTC rather than the input time zones" do
+      time = Time.local(2026, 10, 17, location: location)
+
+      EnglishTimeHelper.from(time: time, now: now).should eq "4 days ago"
+      ChineseTimeHelper.from(time: time, now: now).should eq "四天前"
+    end
+
+    it "leaves pure durations unchanged" do
+      EnglishTimeHelper.distance(span: 86.hours).should eq "4 days"
+      ChineseTimeHelper.distance(span: 86.hours).should eq "四天"
+    end
+
+    it "counts dates across daylight saving changes, not elapsed 24-hour periods" do
+      new_york = Time::Location.load("America/New_York")
+      posted_at = Time.local(2026, 3, 8, location: new_york)
+      reference_time = Time.local(2026, 3, 10, location: new_york)
+
+      (reference_time - posted_at).should eq 47.hours
+      EnglishTimeHelper.from(time: posted_at, location: new_york, now: reference_time).should eq "2 days ago"
+      ChineseTimeHelper.from(time: posted_at, location: new_york, now: reference_time).should eq "两天前"
+    end
+
+    it "does not report zero days after a full day during the autumn clock change" do
+      new_york = Time::Location.load("America/New_York")
+      posted_at = Time.local(2026, 11, 1, location: new_york)
+      reference_time = Time.local(2026, 11, 1, 23, location: new_york)
+
+      (reference_time - posted_at).should eq 24.hours
+      EnglishTimeHelper.from(time: posted_at, location: new_york, now: reference_time).should eq "a day ago"
+      ChineseTimeHelper.from(time: posted_at, location: new_york, now: reference_time).should eq "一天前"
     end
   end
 end
